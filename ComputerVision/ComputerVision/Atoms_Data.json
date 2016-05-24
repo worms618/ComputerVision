@@ -1,0 +1,34 @@
+{
+  "atoms": [
+    {
+      "atomic number": 8,
+      "element name": "oxygen",
+      "chemical symbol": "o",
+      "covalently": 2,
+      "atomic mass": 15.999,
+      "visualization": [
+        1.0,0,0,1.0
+      ]
+    },
+    {
+      "atomic number": 1,
+      "element name": "hydrogen",
+      "chemical symbol": "h",
+      "covalently": 1,
+      "atomic mass": 1.008,
+      "visualization": [
+        1.0,1.0,1.0,1.0
+      ]
+    },
+    {
+      "atomic number": 6,
+      "element name": "carbon",
+      "chemical symbol": "c",
+      "covalently": 4,
+      "atomic mass": 12.011,
+      "visualization": [
+        0.0,0.0,0.0,1.0
+      ]
+    }
+  ]  
+}
