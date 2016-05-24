@@ -1,7 +1,6 @@
 #include "PeriodicTable.h"
 #include <fstream>
 #include <iostream>
-#include "Atom.h"
 #include "json.h"
 
 
@@ -30,7 +29,7 @@ void PeriodicTable::load_atoms()
 	std::ifstream file("Atoms_Data.json");
 	if (!file.is_open())
 	{
-		std::cout << "Can't open atoms and molecul file\n" << std::endl;
+		std::cout << "Can't open atoms_data file\n" << std::endl;
 		return;
 	}
 	json::Value atoms_data = json::readJson(file);

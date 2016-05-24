@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include "Atom.h"
-#include "Singleton.h"
 
 class PeriodicTable
 {

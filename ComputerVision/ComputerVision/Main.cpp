@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Atom.h"
 #include "PeriodicTable.h"
+#include "laboratory.h"
 
 
 int main(int agrc, char* argv[])
@@ -13,6 +14,12 @@ int main(int agrc, char* argv[])
 	PeriodicTable pTable;
 
 	std::cout << pTable.getAtom(oxygen.atomicNumber)->toString() << std::endl;
+
+	laboratory l;
+
+	for (auto molecule : l.molecules)
+		std::cout << molecule->toString() << std::endl;
+
 
 	std::cin.get();
 	return 0;
