@@ -1,6 +1,7 @@
 #include <GL\freeglut.h>
 #define _USE_MATH_DEFINES
 #include <cmath>
+
 #include <iostream>
 #include "Atom.h"
 #include "PeriodicTable.h"
@@ -52,6 +53,7 @@ int main(int agrc, char* argv[])
 	glutInitWindowSize(width, height);
 	glutInit(&agrc, argv);
 	glutCreateWindow("Eindopdracht Computervision Opengl");
+	glutFullScreen();
 
 	memset(keys, 0, sizeof(keys));
 	glEnable(GL_DEPTH_TEST);
@@ -77,7 +79,19 @@ void display()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0f, (float)width / height, 0.1f, 50);
+
+	switch (viewMode)
+	{
+	case PERSPECTIVE:
+		gluPerspective(60.0f, (float)width / height, 0.1f, 50);
+		break;
+	case ORTHOGRAPHIC:
+		glOrtho(-5, 5, -5, 5, 0.1f, 50);
+		break;
+	default:
+		exit(0);
+		break;
+	}
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -108,6 +122,8 @@ void idle()
 	if (keys['s']) move(270, deltaTime*speed, false);
 	if (keys['q']) move(1, deltaTime*speed, true);
 	if (keys['e']) move(-1, deltaTime*speed, true);
+	if (keys['o'])viewMode = ORTHOGRAPHIC;
+	if (keys['p'])viewMode = PERSPECTIVE;
 
 	glutPostRedisplay();
 }
