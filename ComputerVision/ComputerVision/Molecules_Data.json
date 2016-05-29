@@ -1,0 +1,30 @@
+{
+  "molecules": [
+    {
+      "molecul name": "dihydrogen monoxide",
+      "atoms": [
+        {
+          "atomic number": 1 ,
+          "amount of atoms": 2 
+        },
+        {
+          "atomic number": 8 ,
+          "amount of atoms": 1 
+        }
+      ]
+    },
+    {
+      "molecul name": "carbon dioxide",
+      "atoms": [
+        {
+          "atomic number": 8,
+          "amount of atoms": 2 
+        },
+        {
+          "atomic number": 6 ,
+          "amount of atoms": 1 
+        }
+      ]
+    }
+  ]
+}
