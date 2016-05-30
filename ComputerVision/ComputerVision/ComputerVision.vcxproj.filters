@@ -30,6 +30,9 @@
     <ClInclude Include="json.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ScreenHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -48,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="laboratory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

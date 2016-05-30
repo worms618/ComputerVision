@@ -151,6 +151,7 @@
     <ClInclude Include="laboratory.h" />
     <ClInclude Include="Molecule.h" />
     <ClInclude Include="PeriodicTable.h" />
+    <ClInclude Include="ScreenHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Atom.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Molecule.cpp" />
     <ClCompile Include="PeriodicTable.cpp" />
+    <ClCompile Include="ScreenHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Atoms_Data.json" />
