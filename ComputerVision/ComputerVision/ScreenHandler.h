@@ -1,6 +1,6 @@
 #pragma once
-#define PERSPECTIVE 0
-#define ORTHOGRAPHIC 1
+#include "Screen.h"
+#include "Vector.h"
 
 class ScreenHandler
 {
@@ -11,21 +11,17 @@ public:
 	void init();
 	void draw();
 	void update();
-	void moveCamera(float angle, float fac, bool height);
 
 	int width, height;
 
 	const float speed = 10;
 	float lastFrameTime;
 
-	int viewMode;
-
-	struct Camera
-	{
-		float posX, posY, posZ, rotX, rotY;
-	} camera;
-
 	bool keys[255];
 
+	Screen* currentScreen;
+
+	Vec2f mousePosition;
+	Vec2f mouseOffSet;
 };
 

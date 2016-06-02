@@ -48,3 +48,19 @@ std::string Atom::toString(void)
 
 	return oss.str();
 }
+
+AtomInstance::AtomInstance(int an)
+{
+	atomicNumber = an;
+	for (int i = 0; i < 3; i++)
+	{
+		position[i] = 0;
+		rotation[i] = 0;
+	}
+	scale = 1.0f;
+}
+
+AtomInstance::~AtomInstance()
+{
+	
+}

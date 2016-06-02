@@ -12,6 +12,8 @@ PeriodicTable::PeriodicTable()
 
 PeriodicTable::~PeriodicTable()
 {
+	for (auto atom : all_atoms)
+		delete atom;
 }
 
 Atom * PeriodicTable::getAtom(int atomicNumber)

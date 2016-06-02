@@ -42,7 +42,7 @@ int main(int agrc, char* argv[])
 	glutInitWindowSize(screenHandler->width, screenHandler->height);
 	glutInit(&agrc, argv);
 	glutCreateWindow("Eindopdracht Computervision Opengl");
-	glutFullScreen();
+	//glutFullScreen();
 	
 	glEnable(GL_DEPTH_TEST);
 
@@ -83,8 +83,7 @@ void mousePassiveMotion(int x, int y)
 	int dy = y - screenHandler->height / 2;
 	if ((dx != 0 || dy != 0) && abs(dx) < 400 && abs(dy) < 400)
 	{
-		screenHandler->camera.rotY += dx / 10.0f;
-		screenHandler->camera.rotX += dy / 10.0f;
+		screenHandler->mouseOffSet = screenHandler->mouseOffSet + Vec2f(dx, dy);
 		glutWarpPointer(screenHandler->width / 2, screenHandler->height / 2);
 		justMoved = true;
 	}

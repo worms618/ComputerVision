@@ -1,9 +1,6 @@
 #include "ScreenHandler.h"
 #include <GL\freeglut.h>
-#define _USE_MATH_DEFINES
-#include <cmath>
-
-
+#include "LaboratoryScreen.h"
 
 ScreenHandler::ScreenHandler()
 {
@@ -15,19 +12,21 @@ ScreenHandler::~ScreenHandler()
 {
 	if (keys)
 		delete keys;
+	if (currentScreen)
+		delete currentScreen;
 }
 
 void ScreenHandler::init()
 {
 	lastFrameTime = 0;
-	viewMode = PERSPECTIVE;
-	camera.posX = 0;
-	camera.posY = 0;
-	camera.posZ = 0;
-	camera.rotX = 0;
-	camera.rotY = 0;
+	
 	width = 800;
 	height = 600;
+
+	mousePosition = Vec2f(width / 2, height / 2);
+
+	currentScreen = new LaboratoryScreen();
+	currentScreen->init();
 }
 
 void ScreenHandler::draw()
@@ -37,33 +36,11 @@ void ScreenHandler::draw()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-
-	switch (viewMode)
-	{
-	case PERSPECTIVE:
-		gluPerspective(60.0f, (float)width / height, 0.1f, 50);
-		break;
-	case ORTHOGRAPHIC:
-		glOrtho(-5, 5, -5, 5, 0.1f, 50);
-		break;
-	default:
-		exit(0);
-		break;
-	}
-
+	gluPerspective(60.0f, (float)width / height, 0.1f, 50);
+		
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glRotatef(camera.rotX, 1, 0, 0);
-	glRotatef(camera.rotY, 0, 1, 0);
-	glTranslatef(camera.posX, camera.posY, camera.posZ);
-
-	glColor3f(0.1f, 1.0f, 0.2f);
-	glBegin(GL_QUADS);
-	glVertex3f(-15, -1, -15);
-	glVertex3f(15, -1, -15);
-	glVertex3f(15, -1, 15);
-	glVertex3f(-15, -1, 15);
-	glEnd();
+	currentScreen->draw(width,height);
 
 	glutSwapBuffers();
 }
@@ -74,31 +51,28 @@ void ScreenHandler::update()
 	float deltaTime = frameTime - lastFrameTime;
 	lastFrameTime = frameTime;
 
-	if (camera.rotX > 90)
-		camera.rotX = 90;
-	if (camera.rotX < -90)
-		camera.rotX = -90;
+	currentScreen->camera.rotY += mouseOffSet.x / 10.0f;
+	currentScreen->camera.rotX += mouseOffSet.y / 10.0f;
+	if (currentScreen->camera.rotX > 90)
+		currentScreen->camera.rotX = 90;
+	if (currentScreen->camera.rotX < -90)
+		currentScreen->camera.rotX = -90;
 
 
-	if (keys['a']) moveCamera(0, deltaTime*speed, false);
-	if (keys['d']) moveCamera(180, deltaTime*speed, false);
-	if (keys['w']) moveCamera(90, deltaTime*speed, false);
-	if (keys['s']) moveCamera(270, deltaTime*speed, false);
-	if (keys['q']) moveCamera(1, deltaTime*speed, true);
-	if (keys['e']) moveCamera(-1, deltaTime*speed, true);
-	if (keys['o'])viewMode = ORTHOGRAPHIC;
-	if (keys['p'])viewMode = PERSPECTIVE;
+	if (keys['a']) currentScreen->moveCamera(0, deltaTime*speed, false);
+	if (keys['d']) currentScreen->moveCamera(180, deltaTime*speed, false);
+	if (keys['w']) currentScreen->moveCamera(90, deltaTime*speed, false);
+	if (keys['s']) currentScreen->moveCamera(270, deltaTime*speed, false);
+	if (keys['q']) currentScreen->moveCamera(1, deltaTime*speed, true);
+	if (keys['e']) currentScreen->moveCamera(-1, deltaTime*speed, true);
+	/*if (keys['o'])viewMode = ORTHOGRAPHIC;
+	if (keys['p'])viewMode = PERSPECTIVE;*/
+
+	currentScreen->update(deltaTime);
+
+	mousePosition = mousePosition + mouseOffSet;
+	mouseOffSet = Vec2f(0, 0);
 
 	glutPostRedisplay();
 }
 
-void ScreenHandler::moveCamera(float angle, float fac, bool height)
-{
-	if (height)
-		camera.posY += angle*fac;
-	else
-	{
-		camera.posX += (float)cos((camera.rotY + angle) / 180 * M_PI) * fac;
-		camera.posZ += (float)sin((camera.rotY + angle) / 180 * M_PI) * fac;
-	}
-}
