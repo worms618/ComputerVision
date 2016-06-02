@@ -17,6 +17,7 @@ public:
 private:
 	void drawMolecule(const MoleculeInstance * m);
 	void drawAtom(AtomInstance * a);
+	void drawAtomBinding(AtomBindingInstance * ab);
 	
 
 	std::vector<MoleculeInstance*>molecule_instances;

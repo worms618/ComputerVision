@@ -94,6 +94,11 @@ Vec3f Vec3f::cross(const Vec3f & other)
 		);
 }
 
+float Vec3f::dot(const Vec3f & other)
+{
+	return (x*other.x + y*other.y + z*other.z);
+}
+
 
 
 Vec2f::Vec2f(float x, float y)

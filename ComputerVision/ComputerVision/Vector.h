@@ -26,7 +26,7 @@ public:
 	Vec3f operator *(const float &other);
 
 	Vec3f cross(const Vec3f &other);
-
+	float dot(const Vec3f &other);
 };
 
 class Vec2f

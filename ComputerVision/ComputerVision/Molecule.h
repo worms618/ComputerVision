@@ -12,16 +12,6 @@ public:
 	void addAtom(Atom*);
 	std::string toString(void);
 
-	class AtomBinding
-	{
-	public:
-		AtomBinding();
-		~AtomBinding();
-
-		int baseAtomIndex, bindingAtomIndex, bindings, distance;
-		float angle;
-	};
-
 	std::vector<AtomBinding*> atomBindings;
 	std::vector<int>atoms;
 private:
@@ -41,8 +31,10 @@ public:
 	Vec3f rotation, position;
 	float scale;
 	std::vector<AtomInstance*>atomInstances;
+	std::vector<AtomBindingInstance*>atomBindingInstances;
 private:
 	void setAtoms();
+	void setAtomBindings();
 };
 
 

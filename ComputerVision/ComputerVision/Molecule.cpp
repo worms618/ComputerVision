@@ -60,10 +60,14 @@ std::string Molecule::toString(void)
 MoleculeInstance::MoleculeInstance(Molecule * m)
 {
 	molecule = m;
-	for (auto atom : molecule->atoms)
+	for (auto atom : molecule->atoms)	
 		atomInstances.push_back(new AtomInstance(atom));
+	for (auto atomBinding : molecule->atomBindings)
+		atomBindingInstances.push_back(new AtomBindingInstance(atomBinding));
+	
 	setAtoms();
-	scale = 1.0f;
+	setAtomBindings();
+	scale = 1.0f;	
 }
 
 MoleculeInstance::~MoleculeInstance()
@@ -72,23 +76,13 @@ MoleculeInstance::~MoleculeInstance()
 		delete molecule;
 	for (auto atom_instance : atomInstances)
 		delete atom_instance;
+	for (auto atom_binding : atomBindingInstances)
+		delete atom_binding;
 	
 }
 
 void MoleculeInstance::setAtoms()
-{
-	/*for (int i = 0; i < molecule->atomBindings.size(); i++)
-	{
-		AtomInstance* baseAtom = atomInstances[molecule->atomBindings[i]->baseAtomIndex];
-		AtomInstance* bindingAtom = atomInstances[molecule->atomBindings[i]->bindingAtomIndex];
-		int bindings = molecule->atomBindings[i]->bindings;
-		int distance = molecule->atomBindings[i]->distance;
-		Vec3f rot = molecule->atomBindings[i]->rotation;
-
-		bindingAtom->position.x = baseAtom->position.x + (float)cos(rot.x / 180 * M_PI) * distance;
-		bindingAtom->position.y = baseAtom->position.y + (float)sin(rot.y / 180 * M_PI) * distance;
-	}*/
-	
+{	
 	for (auto ab : molecule->atomBindings)
 	{		
 		AtomInstance* baseAtom = atomInstances[ab->baseAtomIndex];
@@ -106,15 +100,13 @@ void MoleculeInstance::setAtoms()
 	}
 }
 
-Molecule::AtomBinding::AtomBinding()
+//http://www.thjsmith.com/40/cylinder-between-two-points-opengl-c
+void MoleculeInstance::setAtomBindings()
 {
-	baseAtomIndex = -1;
-	bindingAtomIndex = -1;
-	bindings = -1;
-	distance = -1;
+	for (auto ab : atomBindingInstances)
+	{
+		ab->basePosition = atomInstances[ab->atomBinding->baseAtomIndex]->position;
+		ab->bindingPosition = atomInstances[ab->atomBinding->bindingAtomIndex]->position;
+	}
 }
 
-
-Molecule::AtomBinding::~AtomBinding()
-{
-}

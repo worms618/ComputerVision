@@ -19,8 +19,30 @@
             "angle": -52.23,
             "distance": 3
           }
+        ]
+      }
+    },
+    {
+      "molecule name": "carbon dioxide",
+      "atoms": [ 6, 8, 8 ],
+      "molecule structuur": {
+        "atom bindings": [
+          {
+            "base atom index": 0,
+            "binding atom index": 1,
+            "bindings": 2,
+            "angle":0,
+            "distance": 3
+          },
+          {
+            "base atom index": 0,
+            "binding atom index": 2,
+            "bindings": 1,
+            "angle": 180,
+            "distance": 3
+          }
         ]  
-      }         
+      }        
     }
   ]
 }

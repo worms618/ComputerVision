@@ -1,5 +1,7 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "LaboratoryScreen.h"
-#include <GL\freeglut.h>
+//#include <GL\freeglut.h>
 
 
 LaboratoryScreen::LaboratoryScreen()
@@ -35,7 +37,7 @@ void LaboratoryScreen::draw(int, int)
 	glRotatef(camera.rotY, 0, 1, 0);
 	glTranslatef(camera.posX, camera.posY, camera.posZ);
 
-	drawMolecule(molecule_instances[0]);
+	drawMolecule(molecule_instances[1]);
 	
 	/*glColor3f(0.1f, 1.0f, 0.2f);
 	glBegin(GL_QUADS);
@@ -67,6 +69,8 @@ void LaboratoryScreen::drawMolecule(const MoleculeInstance * m)
 	for (auto atomInstance : m->atomInstances)
 		drawAtom(atomInstance);
 
+	for (auto atomBinding : m->atomBindingInstances)
+		drawAtomBinding(atomBinding);
 	glPopMatrix();
 }
 
@@ -89,5 +93,22 @@ void LaboratoryScreen::drawAtom(AtomInstance * a)
 	atomModel->draw();
 	glPopMatrix();
 }
+
+void LaboratoryScreen::drawAtomBinding(AtomBindingInstance * ab)
+{	
+	//glLineWidth(atomModel->radius*2/10);
+	glLineWidth(500);
+	glBegin(GL_LINES);
+	glVertex3f(ab->basePosition.x + atomModel->center.x,
+		ab->basePosition.y + atomModel->center.y,
+		ab->basePosition.z + atomModel->center.z);
+
+	glVertex3f(ab->bindingPosition.x + atomModel->center.x,
+		ab->bindingPosition.y + +atomModel->center.y, 
+		ab->bindingPosition.z + +atomModel->center.z);
+	glEnd();	
+}
+
+
 
 

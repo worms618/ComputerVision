@@ -42,7 +42,7 @@ int main(int agrc, char* argv[])
 	glutInitWindowSize(screenHandler->width, screenHandler->height);
 	glutInit(&agrc, argv);
 	glutCreateWindow("Eindopdracht Computervision Opengl");
-	//glutFullScreen();
+	glutFullScreen();
 	
 	glEnable(GL_DEPTH_TEST);
 

@@ -2,6 +2,7 @@
 #include <string>
 #include "Vector.h"
 
+
 class Atom
 {
 public:
@@ -27,6 +28,7 @@ public:
 class AtomInstance
 {
 public:
+	AtomInstance();
 	AtomInstance(int an);
 	~AtomInstance();
 
@@ -34,6 +36,31 @@ public:
 	Vec3f position, rotation;
 	float scale;
 };
+
+
+class AtomBinding
+{
+public:
+	AtomBinding();
+	~AtomBinding();
+
+	int baseAtomIndex, bindingAtomIndex, bindings, distance;
+	float angle;
+};
+
+class AtomBindingInstance
+{
+public:
+	AtomBindingInstance(AtomBinding*);
+	~AtomBindingInstance();
+
+	AtomBinding* atomBinding;
+
+	Vec3f basePosition, bindingPosition;
+	float scale,radius;	
+};
+
+
 
 
 

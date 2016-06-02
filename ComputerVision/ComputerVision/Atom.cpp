@@ -49,6 +49,16 @@ std::string Atom::toString(void)
 	return oss.str();
 }
 
+AtomInstance::AtomInstance()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		position[i] = 0;
+		rotation[i] = 0;
+	}
+	scale = 1.0f;
+}
+
 AtomInstance::AtomInstance(int an)
 {
 	atomicNumber = an;
@@ -63,4 +73,33 @@ AtomInstance::AtomInstance(int an)
 AtomInstance::~AtomInstance()
 {
 	
+}
+
+AtomBinding::AtomBinding()
+{
+	baseAtomIndex = -1;
+	bindingAtomIndex = -1;
+	bindings = -1;
+	distance = -1;
+}
+
+
+AtomBinding::~AtomBinding()
+{
+}
+
+
+
+AtomBindingInstance::AtomBindingInstance(AtomBinding* ab)
+{
+	atomBinding = ab;
+	scale = 1.0f;	
+	radius = 0.5f;	
+}
+
+
+AtomBindingInstance::~AtomBindingInstance()
+{
+	if (atomBinding)
+		delete atomBinding;	
 }

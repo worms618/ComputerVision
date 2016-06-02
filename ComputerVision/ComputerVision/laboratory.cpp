@@ -50,7 +50,7 @@ void laboratory::load_molecules(void)
 		{
 			for (auto atom_binding : molecule_data["molecule structuur"]["atom bindings"])
 			{
-				Molecule::AtomBinding* ab = new Molecule::AtomBinding();
+				AtomBinding* ab = new AtomBinding();
 
 				if (!atom_binding["base atom index"].isNull())
 					ab->baseAtomIndex = atom_binding["base atom index"];
