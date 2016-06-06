@@ -1,5 +1,5 @@
 #include "Atom.h"
-
+#include <GL\freeglut.h>
 #include <sstream>
 
 Atom::Atom()
@@ -47,6 +47,14 @@ std::string Atom::toString(void)
 	oss << "\nAtomic mass: " << atomicMass;	
 
 	return oss.str();
+}
+
+void Atom::bindColor(void)
+{
+	glColor4f(color.red,
+		color.green,
+		color.blue,
+		color.alfa);
 }
 
 AtomInstance::AtomInstance()

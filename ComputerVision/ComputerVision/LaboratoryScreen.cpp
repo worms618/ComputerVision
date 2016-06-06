@@ -2,6 +2,9 @@
 #include <cmath>
 #include "LaboratoryScreen.h"
 //#include <GL\freeglut.h>
+#include <iostream>
+
+float lineWidth[2];
 
 
 LaboratoryScreen::LaboratoryScreen()
@@ -19,6 +22,7 @@ LaboratoryScreen::~LaboratoryScreen()
 void LaboratoryScreen::init()
 {
 	Screen::init();
+	index = 0;
 	lab = new laboratory();
 	camera.posZ = -10.0f;
 	atomModel = Model::load("models/sphere/sphere.obj");
@@ -37,7 +41,8 @@ void LaboratoryScreen::draw(int, int)
 	glRotatef(camera.rotY, 0, 1, 0);
 	glTranslatef(camera.posX, camera.posY, camera.posZ);
 
-	drawMolecule(molecule_instances[1]);
+	if(molecule_instances.size() > 0);
+		drawMolecule(molecule_instances[1]);
 	
 	/*glColor3f(0.1f, 1.0f, 0.2f);
 	glBegin(GL_QUADS);
@@ -52,12 +57,15 @@ void LaboratoryScreen::draw(int, int)
 	delete ai;*/
 }
 
-void LaboratoryScreen::update(float deltaTime)
+void LaboratoryScreen::update(float deltaTime, bool keys[])
 {
+	glGetFloatv(GL_LINE_WIDTH_RANGE, lineWidth);
+	//std::cout << lineWidth[0] << ", " << lineWidth[1] << std::endl;
+	if (keys['p']) index %= 2; index++;
 }
 
 
-void LaboratoryScreen::drawMolecule(const MoleculeInstance * m)
+void LaboratoryScreen::drawMolecule(MoleculeInstance * m)
 {
 	glPushMatrix();
 	glScalef(m->scale, m->scale, m->scale);
@@ -69,8 +77,21 @@ void LaboratoryScreen::drawMolecule(const MoleculeInstance * m)
 	for (auto atomInstance : m->atomInstances)
 		drawAtom(atomInstance);
 
-	for (auto atomBinding : m->atomBindingInstances)
-		drawAtomBinding(atomBinding);
+	glLineWidth(lineWidth[1]);
+
+	for (auto ab : m->atomBindingInstances)
+	{
+
+		Vec3f base = ab->basePosition + atomModel->center;
+		Vec3f binding = ab->bindingPosition + atomModel->center;
+
+		m->drawAtomBindingLines(
+			lab->periodicTable->getAtom(m->molecule->atoms[ab->atomBinding->baseAtomIndex]),
+			lab->periodicTable->getAtom(m->molecule->atoms[ab->atomBinding->bindingAtomIndex]), 
+			base, binding);
+		//drawAtomBinding(ab);
+	}	
+
 	glPopMatrix();
 }
 
@@ -84,31 +105,31 @@ void LaboratoryScreen::drawAtom(AtomInstance * a)
 	glTranslatef(a->position.x, a->position.y, a->position.z);
 	
 	Atom* atom = lab->periodicTable->getAtom(a->atomicNumber);
+	atom->bindColor();
 
-	glColor4f(atom->color.red, 
-		atom->color.green,
-		atom->color.blue, 
-		atom->color.alfa);
-	
 	atomModel->draw();
 	glPopMatrix();
 }
 
-void LaboratoryScreen::drawAtomBinding(AtomBindingInstance * ab)
-{	
-	//glLineWidth(atomModel->radius*2/10);
-	glLineWidth(500);
-	glBegin(GL_LINES);
-	glVertex3f(ab->basePosition.x + atomModel->center.x,
-		ab->basePosition.y + atomModel->center.y,
-		ab->basePosition.z + atomModel->center.z);
-
-	glVertex3f(ab->bindingPosition.x + atomModel->center.x,
-		ab->bindingPosition.y + +atomModel->center.y, 
-		ab->bindingPosition.z + +atomModel->center.z);
-	glEnd();	
-}
-
-
-
-
+//void LaboratoryScreen::drawAtomBinding(AtomBindingInstance* ab)
+//{
+//	Vec3f base = ab->basePosition + atomModel->center;
+//	Vec3f binding = ab->bindingPosition + atomModel->center;
+//	Vec3f diff = binding - base;
+//
+//	//base->bindColor();
+//
+//	//lab->periodicTable->getAtom(ab->atomBinding->atomicNumber)->bindColor();
+//	
+//	glBegin(GL_LINES);
+//	glVertex3f(base.x, base.y, base.z);
+//	glVertex3f(base.x + diff.x / 2, base.y + diff.y / 2, base.z + diff.z / 2);
+//	glEnd();
+//
+//	//binding->bindColor();
+//
+//	glBegin(GL_LINES);
+//	glVertex3f(binding.x, binding.y, binding.z);
+//	glVertex3f(binding.x - diff.x / 2, binding.y - diff.y / 2, binding.z - diff.z / 2);
+//	glEnd();
+//}

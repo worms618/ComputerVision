@@ -23,6 +23,8 @@ public:
 
 	void setColor(float r, float g, float b, float a);
 	std::string toString(void);
+
+	void bindColor(void);
 };
 
 class AtomInstance

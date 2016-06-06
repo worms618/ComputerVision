@@ -12,14 +12,15 @@ public:
 
 	void init();
 	void draw(int, int);
-	void update(float deltaTime);
+	void update(float deltaTime, bool keys[]);
 	laboratory* lab;
 private:
-	void drawMolecule(const MoleculeInstance * m);
+	void drawMolecule(MoleculeInstance * m);
 	void drawAtom(AtomInstance * a);
-	void drawAtomBinding(AtomBindingInstance * ab);
-	
+	//void drawAtomBinding(AtomBindingInstance* abi);
 
+
+	int index;
 	std::vector<MoleculeInstance*>molecule_instances;
 
 	Model* atomModel;

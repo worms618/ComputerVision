@@ -68,7 +68,7 @@ void ScreenHandler::update()
 	/*if (keys['o'])viewMode = ORTHOGRAPHIC;
 	if (keys['p'])viewMode = PERSPECTIVE;*/
 
-	currentScreen->update(deltaTime);
+	currentScreen->update(deltaTime, keys);
 
 	mousePosition = mousePosition + mouseOffSet;
 	mouseOffSet = Vec2f(0, 0);

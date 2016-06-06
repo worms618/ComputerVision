@@ -8,7 +8,7 @@ public:
 
 	virtual void init();
 	virtual void draw(int,int);
-	virtual void update(float deltaTime);
+	virtual void update(float deltaTime, bool keys[]);
 
 	struct Camera
 	{

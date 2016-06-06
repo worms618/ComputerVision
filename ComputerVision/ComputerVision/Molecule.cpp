@@ -3,7 +3,7 @@
 #include "Molecule.h"
 #include <sstream>
 #include <iostream>
-
+#include <GL\freeglut.h>
 
 Molecule::Molecule()
 {
@@ -81,6 +81,25 @@ MoleculeInstance::~MoleculeInstance()
 	
 }
 
+
+void MoleculeInstance::drawAtomBindingLines(Atom * base, Atom * binding, Vec3f basePos, Vec3f bindingPos)
+{
+	Vec3f diff = bindingPos - basePos;
+
+	base->bindColor();
+	glBegin(GL_LINES);
+	glVertex3f(basePos.x, basePos.y, basePos.z);
+	glVertex3f(basePos.x + diff.x / 2, basePos.y + diff.y / 2, basePos.z + diff.z / 2);
+	glEnd();
+
+	binding->bindColor();
+
+	glBegin(GL_LINES);
+	glVertex3f(bindingPos.x, bindingPos.y, bindingPos.z);
+	glVertex3f(bindingPos.x - diff.x / 2, bindingPos.y - diff.y / 2, bindingPos.z - diff.z / 2);
+	glEnd();
+}
+
 void MoleculeInstance::setAtoms()
 {	
 	for (auto ab : molecule->atomBindings)
@@ -90,7 +109,7 @@ void MoleculeInstance::setAtoms()
 		int bindings = ab->bindings;
 		int distance = ab->distance;
 		float angle = ab->angle;
-				
+		
 		bindingAtom->position.x = baseAtom->position.x + (float)cos(angle / 180 * M_PI) * distance;
 		if (angle < 0)
 			bindingAtom->position.x *= -1;
@@ -100,7 +119,6 @@ void MoleculeInstance::setAtoms()
 	}
 }
 
-//http://www.thjsmith.com/40/cylinder-between-two-points-opengl-c
 void MoleculeInstance::setAtomBindings()
 {
 	for (auto ab : atomBindingInstances)
@@ -109,4 +127,6 @@ void MoleculeInstance::setAtomBindings()
 		ab->bindingPosition = atomInstances[ab->atomBinding->bindingAtomIndex]->position;
 	}
 }
+
+
 
