@@ -4,14 +4,14 @@
 
 ScreenHandler::ScreenHandler()
 {
-	memset(keys, 0, sizeof(keys));
+	memset(keys, 0, sizeof(keys));	
 }
 
 
 ScreenHandler::~ScreenHandler()
 {
 	if (keys)
-		delete keys;
+		delete keys;	
 	if (currentScreen)
 		delete currentScreen;
 }

@@ -18,7 +18,7 @@ public:
 	float lastFrameTime;
 
 	bool keys[255];
-
+	
 	Screen* currentScreen;
 
 	Vec2f mousePosition;

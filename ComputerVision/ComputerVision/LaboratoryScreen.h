@@ -17,12 +17,11 @@ public:
 private:
 	void drawMolecule(MoleculeInstance * m);
 	void drawAtom(AtomInstance * a);
-	//void drawAtomBinding(AtomBindingInstance* abi);
-
-
+	void drawAtomBinding(AtomBindingInstance* abi);
+		
 	int index;
 	std::vector<MoleculeInstance*>molecule_instances;
-
+	MoleculeInstance* currentMolecule;
 	Model* atomModel;
 };
 

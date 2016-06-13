@@ -81,25 +81,6 @@ MoleculeInstance::~MoleculeInstance()
 	
 }
 
-
-void MoleculeInstance::drawAtomBindingLines(Atom * base, Atom * binding, Vec3f basePos, Vec3f bindingPos)
-{
-	Vec3f diff = bindingPos - basePos;
-
-	base->bindColor();
-	glBegin(GL_LINES);
-	glVertex3f(basePos.x, basePos.y, basePos.z);
-	glVertex3f(basePos.x + diff.x / 2, basePos.y + diff.y / 2, basePos.z + diff.z / 2);
-	glEnd();
-
-	binding->bindColor();
-
-	glBegin(GL_LINES);
-	glVertex3f(bindingPos.x, bindingPos.y, bindingPos.z);
-	glVertex3f(bindingPos.x - diff.x / 2, bindingPos.y - diff.y / 2, bindingPos.z - diff.z / 2);
-	glEnd();
-}
-
 void MoleculeInstance::setAtoms()
 {	
 	for (auto ab : molecule->atomBindings)

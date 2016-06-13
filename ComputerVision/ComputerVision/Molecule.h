@@ -33,7 +33,6 @@ public:
 	std::vector<AtomInstance*>atomInstances;
 	std::vector<AtomBindingInstance*>atomBindingInstances;
 
-	void drawAtomBindingLines(Atom* base, Atom* binding, Vec3f basePos, Vec3f bindingPos);
 
 private:
 	void setAtoms();
