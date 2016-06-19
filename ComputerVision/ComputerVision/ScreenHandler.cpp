@@ -4,14 +4,20 @@
 
 ScreenHandler::ScreenHandler()
 {
-	memset(keys, 0, sizeof(keys));	
+	memset(keysPressed, 0, sizeof(keysPressed));
+	memset(state.keys, 0, sizeof(state.keys));
+	memset(prev.keys, 0, sizeof(prev.keys));
 }
 
 
 ScreenHandler::~ScreenHandler()
-{
-	if (keys)
-		delete keys;	
+{	
+	if (keysPressed)
+		delete keysPressed;
+	if (state.keys)
+		delete[] state.keys;
+	if (prev.keys)
+		delete[] prev.keys;
 	if (currentScreen)
 		delete currentScreen;
 }
@@ -59,20 +65,37 @@ void ScreenHandler::update()
 		currentScreen->camera.rotX = -90;
 
 
-	if (keys['a']) currentScreen->moveCamera(0, deltaTime*speed, false);
-	if (keys['d']) currentScreen->moveCamera(180, deltaTime*speed, false);
-	if (keys['w']) currentScreen->moveCamera(90, deltaTime*speed, false);
-	if (keys['s']) currentScreen->moveCamera(270, deltaTime*speed, false);
-	if (keys['q']) currentScreen->moveCamera(1, deltaTime*speed, true);
-	if (keys['e']) currentScreen->moveCamera(-1, deltaTime*speed, true);
+	if (state.keys['a']) currentScreen->moveCamera(0, deltaTime*speed, false);
+	if (state.keys['d']) currentScreen->moveCamera(180, deltaTime*speed, false);
+	if (state.keys['w']) currentScreen->moveCamera(90, deltaTime*speed, false);
+	if (state.keys['s']) currentScreen->moveCamera(270, deltaTime*speed, false);
+	if (state.keys['q']) currentScreen->moveCamera(1, deltaTime*speed, true);
+	if (state.keys['e']) currentScreen->moveCamera(-1, deltaTime*speed, true);
 	/*if (keys['o'])viewMode = ORTHOGRAPHIC;
 	if (keys['p'])viewMode = PERSPECTIVE;*/
-
-	currentScreen->update(deltaTime, keys);
+	
+	checkKeysPressed();
+	currentScreen->update(deltaTime, keysPressed);	
+	//currentScreen->update(deltaTime, state.keys, prev.keys);
 
 	mousePosition = mousePosition + mouseOffSet;
 	mouseOffSet = Vec2f(0, 0);
-
+	prev = state;
 	glutPostRedisplay();
 }
 
+void ScreenHandler::checkKeysPressed()
+{
+	for (int i = 0; i < 256; i++)
+	{
+		if (state.keys[i] != prev.keys[i])
+		{
+			if (!state.keys[i])
+			{
+				keysPressed[i] = true;
+			}
+		}
+		else
+			keysPressed[i] = false;
+	}
+}

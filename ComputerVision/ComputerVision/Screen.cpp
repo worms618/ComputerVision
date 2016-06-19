@@ -26,6 +26,10 @@ void Screen::draw(int width,int height)
 	
 }
 
+//void Screen::update(float deltaTime, bool keys[], bool prevKeys[])
+//{
+//}
+
 void Screen::update(float deltaTime,bool keys[])
 {
 }

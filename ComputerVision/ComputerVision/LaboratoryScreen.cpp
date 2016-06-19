@@ -6,7 +6,6 @@
 
 float lineWidth[2];
 
-
 LaboratoryScreen::LaboratoryScreen()
 {
 }
@@ -63,11 +62,12 @@ void LaboratoryScreen::draw(int width, int height)
 	glEnd();
 }
 
+bool rotX = false, rotY = false, rotZ = false;
 void LaboratoryScreen::update(float deltaTime, bool keys[])
 {
 	glGetFloatv(GL_LINE_WIDTH_RANGE, lineWidth);
 	//currentMolecule->rotation.x += 0.1f;
-	currentMolecule->rotation.y += 0.1f;
+	//currentMolecule->rotation.y += 0.1f;
 	//currentMolecule->rotation.z += 0.1f;
 	//std::cout << lineWidth[0] << ", " << lineWidth[1] << std::endl;
 	if (keys['p'])
@@ -76,7 +76,37 @@ void LaboratoryScreen::update(float deltaTime, bool keys[])
 		index %= molecule_instances.size();
 		currentMolecule = molecule_instances[index];
 	}
+	if (keys['x'])
+	{
+		rotX = true;
+		rotY = false;
+		rotZ = false;
+	}		
+	if (keys['y'])
+	{ 
+		rotX = false;
+		rotY = true;
+		rotZ = false;
+	}		
+	if (keys['z'])
+	{
+		rotX = false;
+		rotY = false;
+		rotZ = true;
+	}
+		
+
+	if (rotX)	
+		currentMolecule->rotation.x += 0.1f;
+
+	if (rotY)
+		currentMolecule->rotation.y += 0.1f;
+
+	if (rotZ)
+		currentMolecule->rotation.z += 0.1f;
+	
 }
+
 
 
 void LaboratoryScreen::drawMolecule(MoleculeInstance * m)

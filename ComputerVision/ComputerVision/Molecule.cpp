@@ -108,6 +108,3 @@ void MoleculeInstance::setAtomBindings()
 		ab->bindingPosition = atomInstances[ab->atomBinding->bindingAtomIndex]->position;
 	}
 }
-
-
-

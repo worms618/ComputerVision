@@ -93,10 +93,12 @@ void keyboard(unsigned char key, int, int)
 {
 	if (key == 27)
 		exit(0);
-	screenHandler->keys[key] = true;
+	//screenHandler->keys[key] = true;
+	screenHandler->state.keys[key] = true;
 }
 
 void keyboardUp(unsigned char key, int, int)
 {
-	screenHandler->keys[key] = false;
+	//screenHandler->keys[key] = false;
+	screenHandler->state.keys[key] = false;
 }

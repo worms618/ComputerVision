@@ -13,6 +13,7 @@ public:
 	void init();
 	void draw(int, int);
 	void update(float deltaTime, bool keys[]);
+	//void update(float deltaTime, bool keys[], bool prevKeys[]);
 	laboratory* lab;
 private:
 	void drawMolecule(MoleculeInstance * m);

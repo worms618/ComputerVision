@@ -2,6 +2,11 @@
 #include "Screen.h"
 #include "Vector.h"
 
+struct KeyboardState
+{
+	bool keys[255];
+};
+
 class ScreenHandler
 {
 public:
@@ -11,13 +16,17 @@ public:
 	void init();
 	void draw();
 	void update();
+	void checkKeysPressed();
 
 	int width, height;
 
 	const float speed = 10;
 	float lastFrameTime;
 
-	bool keys[255];
+	bool keysPressed[255];
+
+	KeyboardState state;
+	KeyboardState prev;
 	
 	Screen* currentScreen;
 
