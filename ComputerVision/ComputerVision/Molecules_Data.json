@@ -2,19 +2,19 @@
   "molecules": [
     {
       "molecule name": "dihydrogen monoxide",
-      "atoms": [ 8, 1, 1 ],
+      "atoms": [ 1, 1, 8 ],
       "molecule structuur": {
         "atom bindings": [
           {
-            "base atom index": 0,
-            "binding atom index": 1,
+            "base atom index": 2,
+            "binding atom index": 0,
             "bindings": 1,
             "angle": 52.23,
             "distance": 3
           },
           {
-            "base atom index": 0,
-            "binding atom index": 2,
+            "base atom index": 2,
+            "binding atom index": 1,
             "bindings": 1,
             "angle": -52.23,
             "distance": 3

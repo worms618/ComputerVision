@@ -25,37 +25,80 @@ void Molecule::addAtom(Atom * atom)
 {
 	//atoms.push_back(std::pair<int, int>(atom->atomicNumber, amount));
 	atoms.push_back(atom->atomicNumber);
+	bool containts = false;
+
+	for (auto &atom_pair : atom_pairs)
+	{
+		if (atom_pair.first == atom->atomicNumber)
+		{
+			containts = true;
+			break;
+		}
+	}
+	if (!containts)
+		atom_pairs.push_back(std::pair<int, int>(atom->atomicNumber, 0));
+
+	for (auto &atom_pair : atom_pairs)
+	{
+		if (atom_pair.first == atom->atomicNumber)
+		{
+			++atom_pair.second;
+		}
+	}
+}
+
+void Molecule::updateAtomPairs()
+{
+	bool containts = false;
+	for (auto &atom : atoms)
+	{
+		containts = false;
+		for (auto &atom2 : atom_pairs)
+		{
+			if (atom2.first == atom)
+			{
+				containts = true;
+				break;
+			}
+		}
+
+		if (!containts)
+			atom_pairs.push_back(std::pair<int, int>(atom, 0));
+	}
+
+	for (auto &atom : atoms)
+	{
+		for (auto &atom2 : atom_pairs)
+		{
+			if (atom2.first == atom)
+			{
+				++atom2.second;
+			}
+		}
+	}
 }
 
 std::string Molecule::toString(void)
 {
 	std::ostringstream oss;
-	std::vector<std::pair<int, int>>atom_pairs;
-
-	for (auto atom : atoms)
-	{
-		for (auto atom2 : atom_pairs)
-		{
-			if (atom2.first == atom)
-			{
-				atom2.second++;
-				break;
-			}
-			else
-				atom_pairs.push_back(std::pair<int, int>(atom, 1));
-		}
-	}
-
+	
 	oss << "Molecule name: " << name;
 	oss << "\nAtom: ";
+	oss << atomToString();
+
+	return oss.str();
+}
+
+std::string Molecule::atomToString(void)
+{
+	std::ostringstream oss;
 	for (auto atom : atom_pairs)
-	{	
+	{
 		oss << "[" << atom.first << "," << atom.second << "] ";
 	}
 
 	return oss.str();
 }
-
 
 MoleculeInstance::MoleculeInstance(Molecule * m)
 {

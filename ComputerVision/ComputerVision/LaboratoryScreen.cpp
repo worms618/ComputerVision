@@ -3,6 +3,8 @@
 #include "LaboratoryScreen.h"
 //#include <GL\freeglut.h>
 #include <iostream>
+#include <sstream>
+#include <algorithm>
 
 float lineWidth[2];
 
@@ -22,6 +24,7 @@ LaboratoryScreen::~LaboratoryScreen()
 void LaboratoryScreen::init()
 {
 	index = 0;
+	totalAtomicMass = "";
 	Screen::init();
 	
 	lab = new laboratory();
@@ -34,6 +37,8 @@ void LaboratoryScreen::init()
 		molecule_instances.push_back(m);
 	}
 	currentMolecule = molecule_instances[0];
+	updateMoleculeData();
+	
 }
 
 void LaboratoryScreen::draw(int width, int height)
@@ -53,46 +58,51 @@ void LaboratoryScreen::draw(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	glColor4f(57 / 255.0f, 1.0f, 20 / 155.0f, 1.0f);
+	drawString(currentMolecule->molecule->name, 0, height / 10 * 8);	
+	drawString(moleculeFormula, 0, height / 10 * 8 + 18);
+	drawString(totalAtomicMass, 0, height / 10 * 8 + 36);
+
 	glBegin(GL_QUADS);
 	glColor4f(0, 0, 0, 1.0);
 	glVertex2f(0, height / 10 * 8);
 	glVertex2f(0, height);
-	glVertex2f(width / 10, height);
-	glVertex2f(width / 10, height / 10 * 8);
+	glVertex2f(width / 10 * 1.5, height);
+	glVertex2f(width / 10 * 1.5, height / 10 * 8);
 	glEnd();
+
+	
 }
 
 bool rotX = false, rotY = false, rotZ = false;
 void LaboratoryScreen::update(float deltaTime, bool keys[])
 {
 	glGetFloatv(GL_LINE_WIDTH_RANGE, lineWidth);
-	//currentMolecule->rotation.x += 0.1f;
-	//currentMolecule->rotation.y += 0.1f;
-	//currentMolecule->rotation.z += 0.1f;
-	//std::cout << lineWidth[0] << ", " << lineWidth[1] << std::endl;
+	
 	if (keys['p'])
 	{
 		index++;
 		index %= molecule_instances.size();
 		currentMolecule = molecule_instances[index];
+		updateMoleculeData();
 	}
 	if (keys['x'])
 	{
-		rotX = true;
+		rotX = !rotX;
 		rotY = false;
 		rotZ = false;
 	}		
 	if (keys['y'])
 	{ 
 		rotX = false;
-		rotY = true;
+		rotY = !rotY;
 		rotZ = false;
 	}		
 	if (keys['z'])
 	{
 		rotX = false;
 		rotY = false;
-		rotZ = true;
+		rotZ = !rotZ;
 	}
 		
 
@@ -164,4 +174,41 @@ void LaboratoryScreen::drawAtomBinding(AtomBindingInstance* ab)
 	glVertex3f(binding.x, binding.y, binding.z);
 	glVertex3f(binding.x - diff.x / 2, binding.y - diff.y / 2, binding.z - diff.z / 2);
 	glEnd();
+}
+
+void LaboratoryScreen::drawString(std::string str, int x, int y)
+{
+	glRasterPos2f(x, y + 18);
+	for (int i = 0; i < str.size(); i++)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[i]);
+	}
+}
+
+void LaboratoryScreen::updateMoleculeData()
+{
+	std::ostringstream oss;
+	for (auto &atom_pair : currentMolecule->molecule->atom_pairs)
+	{
+		oss << std::showbase << std::uppercase;
+		oss << lab->periodicTable->getAtom(atom_pair.first)->chemicalSymbol;
+		if (atom_pair.second > 1)
+			oss << atom_pair.second;
+
+	}
+	std::string atoms = oss.str();
+	std::transform(atoms.begin(), atoms.end(), atoms.begin(), toupper);
+	moleculeFormula = atoms;
+
+	float tam = 0;
+	for (auto &atom : currentMolecule->molecule->atoms)
+		tam+=lab->periodicTable->getAtom(atom)->atomicMass;
+
+	oss.str("");
+	oss.clear();
+	oss.flush();
+
+	oss.precision(4);
+	oss << tam;
+	totalAtomicMass = oss.str();
 }

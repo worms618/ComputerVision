@@ -10,12 +10,15 @@ public:
 	Molecule(const std::string &);
 	~Molecule();
 	void addAtom(Atom*);
+	void updateAtomPairs();	
 	std::string toString(void);
-
+	std::string atomToString(void);
+	std::string name;
 	std::vector<AtomBinding*> atomBindings;
 	std::vector<int>atoms;
+	std::vector<std::pair<int, int>>atom_pairs;
 private:
-	std::string name;
+	
 	//std::vector<std::pair<int, int>>atoms;	
 	
 };
