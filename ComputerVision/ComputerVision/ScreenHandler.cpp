@@ -74,6 +74,10 @@ void ScreenHandler::update()
 	/*if (keys['o'])viewMode = ORTHOGRAPHIC;
 	if (keys['p'])viewMode = PERSPECTIVE;*/
 	
+	if (currentScreen->camera.posZ <= -perpective / 2)
+		exit(0);
+
+
 	checkKeysPressed();
 	currentScreen->update(deltaTime, keysPressed);	
 	//currentScreen->update(deltaTime, state.keys, prev.keys);
