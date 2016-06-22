@@ -42,15 +42,16 @@ void LaboratoryScreen::init()
 }
 
 void LaboratoryScreen::draw(int width, int height)
-{
+{	
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
 	glTranslatef(camera.posX, camera.posY, camera.posZ);
-
 	
 	drawMolecule(currentMolecule);
 	
-	
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT0);
+	glDisable(GL_COLOR_MATERIAL);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, width, height,0, -10, 10);
@@ -70,13 +71,14 @@ void LaboratoryScreen::draw(int width, int height)
 	glVertex2f(width / 10 * 1.5, height);
 	glVertex2f(width / 10 * 1.5, height / 10 * 8);
 	glEnd();
-
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_COLOR_MATERIAL);
 	
 }
 
 bool rotX = false, rotY = false, rotZ = false;
-void LaboratoryScreen::update(float deltaTime, bool keys[])
-{
+void LaboratoryScreen::update(float deltaTime, bool keys[]){
 	glGetFloatv(GL_LINE_WIDTH_RANGE, lineWidth);
 	
 	if (keys['p'])
@@ -104,7 +106,13 @@ void LaboratoryScreen::update(float deltaTime, bool keys[])
 		rotY = false;
 		rotZ = !rotZ;
 	}
-		
+	if (keys['r'])
+	{
+		currentMolecule->rotation = Vec3f(0, 0, 0);
+		rotX = false;
+		rotY = false;
+		rotZ = false;
+	}
 
 	if (rotX)	
 		currentMolecule->rotation.x += 0.1f;

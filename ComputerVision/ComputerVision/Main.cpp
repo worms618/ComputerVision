@@ -61,8 +61,17 @@ int main(int agrc, char* argv[])
 	glutInitWindowSize(screenHandler->width, screenHandler->height);
 	glutInit(&agrc, argv);
 	glutCreateWindow("Eindopdracht Computervision Opengl");
-	//glutFullScreen();
+	//glutFullScreen();	
 	
+	GLfloat light_position[] = { 0.5,0.3,1,0 };
+	
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	
+
+
 	glEnable(GL_DEPTH_TEST);
 
 	screenHandler->init();
