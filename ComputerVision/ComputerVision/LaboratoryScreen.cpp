@@ -42,15 +42,18 @@ void LaboratoryScreen::init()
 }
 
 void LaboratoryScreen::draw(int width, int height)
-{	
+{
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_COLOR_MATERIAL);
+
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
 	glTranslatef(camera.posX, camera.posY, camera.posZ);
 	
 	drawMolecule(currentMolecule);
 	
-	mip.draw(width,height);
-	
+	mip.draw(width,height);	
 }
 
 bool rotX = false, rotY = false, rotZ = false;

@@ -15,6 +15,7 @@ void MoleculeInfoPanel::draw(int width,int height)
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
 	glDisable(GL_COLOR_MATERIAL);
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, width, height, 0, -10, 10);
@@ -33,7 +34,7 @@ void MoleculeInfoPanel::draw(int width,int height)
 	glVertex2f(0, height);
 	glVertex2f(width / 10 * 1.5, height);
 	glVertex2f(width / 10 * 1.5, height / 10 * 8);
-	glEnd();	
+	glEnd();
 }
 
 void MoleculeInfoPanel::updateInfoPanel(std::string name, std::string formula, int mass)
