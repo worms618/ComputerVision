@@ -151,7 +151,7 @@ void LaboratoryScreen::drawAtom(AtomInstance * a)
 	glTranslatef(a->position.x, a->position.y, a->position.z);
 	
 	Atom* atom = lab->periodicTable->getAtom(a->atomicNumber);
-	atom->bindColor();
+	atom->bindColor();	
 
 	atomModel->draw();
 	glPopMatrix();
@@ -159,21 +159,25 @@ void LaboratoryScreen::drawAtom(AtomInstance * a)
 
 void LaboratoryScreen::drawAtomBinding(AtomBindingInstance* ab)
 {
-	Vec3f base = ab->basePosition + atomModel->center;
-	Vec3f binding = ab->bindingPosition + atomModel->center;
-	Vec3f diff = binding - base;
+	for (auto abi : ab->positions)
+	{
+		Vec3f base = abi.first+ atomModel->center;
+		Vec3f binding = abi.second+ atomModel->center;
+		Vec3f diff = binding - base;
 
-	lab->periodicTable->getAtom(currentMolecule->molecule->atoms[ab->atomBinding->baseAtomIndex])->bindColor();
-	glBegin(GL_LINES);
-	glVertex3f(base.x, base.y, base.z);
-	glVertex3f(base.x + diff.x / 2, base.y + diff.y / 2, base.z + diff.z / 2);
-	glEnd();
+		lab->periodicTable->getAtom(currentMolecule->molecule->atoms[ab->atomBinding->baseAtomIndex])->bindColor();
+		glBegin(GL_LINES);
+		glVertex3f(base.x, base.y, base.z);
+		glVertex3f(base.x + diff.x / 2, base.y + diff.y / 2, base.z + diff.z / 2);
+		glEnd();
 
-	lab->periodicTable->getAtom(currentMolecule->molecule->atoms[ab->atomBinding->bindingAtomIndex])->bindColor();
-	glBegin(GL_LINES);
-	glVertex3f(binding.x, binding.y, binding.z);
-	glVertex3f(binding.x - diff.x / 2, binding.y - diff.y / 2, binding.z - diff.z / 2);
-	glEnd();
+		lab->periodicTable->getAtom(currentMolecule->molecule->atoms[ab->atomBinding->bindingAtomIndex])->bindColor();
+		glBegin(GL_LINES);
+		glVertex3f(binding.x, binding.y, binding.z);
+		glVertex3f(binding.x - diff.x / 2, binding.y - diff.y / 2, binding.z - diff.z / 2);
+		glEnd();
+	}
+	
 }
 
 void LaboratoryScreen::drawString(std::string str, int x, int y)

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "Vector.h"
-
+#include <vector>
 
 class Atom
 {
@@ -58,7 +58,8 @@ public:
 
 	AtomBinding* atomBinding;
 
-	Vec3f basePosition, bindingPosition;
+	//Vec3f basePosition, bindingPosition;
+	std::vector<std::pair<Vec3f, Vec3f>>positions;
 	float scale,radius;	
 };
 

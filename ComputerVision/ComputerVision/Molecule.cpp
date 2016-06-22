@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iostream>
 #include <GL\freeglut.h>
+#include "Matrix.h"
 
 Molecule::Molecule()
 {
@@ -132,22 +133,53 @@ void MoleculeInstance::setAtoms()
 		AtomInstance* bindingAtom = atomInstances[ab->bindingAtomIndex];
 		int bindings = ab->bindings;
 		int distance = ab->distance;
-		float angle = ab->angle;
+		float angle = ab->angle,s,c;
+		angle = angle / 180 * M_PI;
 		
-		bindingAtom->position.x = baseAtom->position.x + (float)cos(angle / 180 * M_PI) * distance;
+		bindingAtom->position = bindingAtom->position - baseAtom->position;
+
+		bindingAtom->position.x += (float)cos(angle) * distance;
+		bindingAtom->position.y += (float)sin(angle) * distance;
+		
+		bindingAtom->position = bindingAtom->position + baseAtom->position;
+
 		if (angle < 0)
 			bindingAtom->position.x *= -1;
-		bindingAtom->position.y = baseAtom->position.y + (float)sin(angle / 180 * M_PI) * distance;
 		if (angle > 0)
-			bindingAtom->position.y *= -1;
+			bindingAtom->position.y *= -1;		
 	}
 }
 
 void MoleculeInstance::setAtomBindings()
 {
+	float offset = 0.4f;
+	//http://math.stackexchange.com/questions/41298/reflecting-a-point-over-a-line-created-by-two-other-points
 	for (auto ab : atomBindingInstances)
-	{
-		ab->basePosition = atomInstances[ab->atomBinding->baseAtomIndex]->position;
-		ab->bindingPosition = atomInstances[ab->atomBinding->bindingAtomIndex]->position;
+	{		
+		Vec3f base = atomInstances[ab->atomBinding->baseAtomIndex]->position;
+		Vec3f binding = atomInstances[ab->atomBinding->bindingAtomIndex]->position;
+
+		if (ab->atomBinding->bindings == 1)
+		{			
+			ab->positions.push_back(std::pair<Vec3f, Vec3f>(base, binding));
+		}
+		else if (ab->atomBinding->bindings == 2)
+		{			
+			//find 1 parralell line with base-line
+			Vec3f base1, binding1;
+			float dx, dy;
+			dx = binding.x - base.x;
+			dy = binding.y - base.y;
+
+			Vec3f dif(dy, -dx,0);
+			dif.Normalize();
+
+			dif = dif * offset / 2;
+			base1 = base + dif;
+			binding1 = binding + dif;
+
+			ab->positions.push_back(std::pair<Vec3f, Vec3f>(base, binding));
+			ab->positions.push_back(std::pair<Vec3f, Vec3f>(base1, binding1));			
+		}
 	}
 }

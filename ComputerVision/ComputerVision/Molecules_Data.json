@@ -1,5 +1,5 @@
 {
-  "molecules": [
+  "molecules": [    
     {
       "molecule name": "dihydrogen monoxide",
       "atoms": [ 1, 1, 8 ],
@@ -31,18 +31,18 @@
             "base atom index": 0,
             "binding atom index": 1,
             "bindings": 2,
-            "angle":0,
+            "angle": 0,
             "distance": 3
           },
           {
             "base atom index": 0,
             "binding atom index": 2,
-            "bindings": 1,
+            "bindings": 2,
             "angle": 180,
             "distance": 3
           }
-        ]  
-      }        
+        ]
+      }
     }
   ]
 }

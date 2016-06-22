@@ -27,8 +27,8 @@
       "covalently": 4,
       "atomic mass": 12.011,
       "visualization": [
-        0.0,0.0,0.0,1.0
+        0,0,0,1.0 
       ]
-    }
+    }    
   ]  
 }

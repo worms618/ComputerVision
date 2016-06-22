@@ -7,6 +7,7 @@
 #include "Atom.h"
 #include "PeriodicTable.h"
 #include "laboratory.h"
+#include "Matrix.h"
 
 void display();
 void idle();
@@ -35,6 +36,24 @@ int main(int agrc, char* argv[])
 
 
 	std::cin.get();*/
+
+	//Matrix::reflect2D(Vec2f(4, 5), 180);
+	//Matrix::rotate3D(Vec3f(5, 5, 0), 90);
+	/*Matrix m1 = Matrix::identity();
+	Matrix m2 = Matrix::identity();
+	int count = 0;
+	for (int r = 0; r < 4; r++)
+	{
+		for (int c = 0; c < 4; c++)
+		{
+			m2.data[r][c] = count;
+			count++;
+		}
+	}
+	
+	Matrix m3 = (m1 * m2);
+	m3 = m2 * m3;
+	m3 = m1 * m3;*/
 
 	screenHandler = new ScreenHandler();
 
