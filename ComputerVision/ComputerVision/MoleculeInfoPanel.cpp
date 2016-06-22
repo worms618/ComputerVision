@@ -14,6 +14,9 @@ void MoleculeInfoPanel::draw(int width,int height)
 {
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
+	glDisable(GL_LIGHT1);
+	glDisable(GL_LIGHT2);
+	glDisable(GL_LIGHT3);
 	glDisable(GL_COLOR_MATERIAL);
 
 	glMatrixMode(GL_PROJECTION);

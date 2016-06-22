@@ -67,11 +67,17 @@ int main(int agrc, char* argv[])
 	GLfloat light_positionrt[] = { 750,ScreenHandler::perpective / 2,250,1.0 };
 	GLfloat light_positionld[] = { 250,ScreenHandler::perpective / 2,750,1.0 };
 	GLfloat light_positionrd[] = { 750,ScreenHandler::perpective / 2,750,1.0 };
+	GLfloat lightColor[] = { 1.0f,1.0f,1.0f,1.0f };
 	
 	glLightfv(GL_LIGHT0, GL_POSITION, light_positionlt);
 	glLightfv(GL_LIGHT1, GL_POSITION, light_positionrt);
 	glLightfv(GL_LIGHT2, GL_POSITION, light_positionld);
 	glLightfv(GL_LIGHT3, GL_POSITION, light_positionrd);
+
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor);
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, lightColor);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
