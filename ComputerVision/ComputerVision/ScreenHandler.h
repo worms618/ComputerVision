@@ -32,5 +32,7 @@ public:
 
 	Vec2f mousePosition;
 	Vec2f mouseOffSet;
+
+	const static int perpective = 100;
 };
 

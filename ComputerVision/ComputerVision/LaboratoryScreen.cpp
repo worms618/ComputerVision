@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include "ScreenHandler.h"
 
 float lineWidth[2];
 
@@ -19,6 +20,8 @@ LaboratoryScreen::~LaboratoryScreen()
 		delete lab;
 	if (currentMolecule)
 		delete currentMolecule;
+	if (skybox)
+		delete skybox;
 }
 
 void LaboratoryScreen::init()
@@ -39,18 +42,24 @@ void LaboratoryScreen::init()
 	currentMolecule = molecule_instances[index];
 	updateMoleculeData();
 	
+	skybox = new Skybox(ScreenHandler::perpective, "skyboxes/labo/");
+	skybox->init();
 }
 
 void LaboratoryScreen::draw(int width, int height)
-{
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_COLOR_MATERIAL);
-
+{	
 	glRotatef(camera.rotX, 1, 0, 0);
 	glRotatef(camera.rotY, 0, 1, 0);
 	glTranslatef(camera.posX, camera.posY, camera.posZ);
-	
+
+	skybox->draw();
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);	
+	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT2);
+	glEnable(GL_LIGHT3);
+	glEnable(GL_COLOR_MATERIAL);
 	drawMolecule(currentMolecule);
 	
 	mip.draw(width,height);	

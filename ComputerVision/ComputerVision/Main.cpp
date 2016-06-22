@@ -63,12 +63,21 @@ int main(int agrc, char* argv[])
 	glutCreateWindow("Eindopdracht Computervision Opengl");
 	glutFullScreen();	
 	
-	GLfloat light_position[] = { 0.5,0.3,1,0 };
+	GLfloat light_positionlt[] = {250,ScreenHandler::perpective/2,250,1.0 };
+	GLfloat light_positionrt[] = { 750,ScreenHandler::perpective / 2,250,1.0 };
+	GLfloat light_positionld[] = { 250,ScreenHandler::perpective / 2,750,1.0 };
+	GLfloat light_positionrd[] = { 750,ScreenHandler::perpective / 2,750,1.0 };
 	
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_positionlt);
+	glLightfv(GL_LIGHT1, GL_POSITION, light_positionrt);
+	glLightfv(GL_LIGHT2, GL_POSITION, light_positionld);
+	glLightfv(GL_LIGHT3, GL_POSITION, light_positionrd);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT2);
+	glEnable(GL_LIGHT3);
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -82,6 +91,8 @@ int main(int agrc, char* argv[])
 	glutPassiveMotionFunc(mousePassiveMotion);
 
 	glutWarpPointer(screenHandler->width / 2, screenHandler->height / 2);
+
+	glutSetCursor(GLUT_CURSOR_NONE);
 
 	glutMainLoop();
 

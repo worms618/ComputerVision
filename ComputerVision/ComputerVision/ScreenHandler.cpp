@@ -42,7 +42,7 @@ void ScreenHandler::draw()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0f, (float)width / height, 0.1f, 50);
+	gluPerspective(60.0f, (float)width / height, 0.1f, perpective);
 		
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

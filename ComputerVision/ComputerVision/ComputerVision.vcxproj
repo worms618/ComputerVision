@@ -157,6 +157,7 @@
     <ClInclude Include="PeriodicTable.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenHandler.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vertex.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="PeriodicTable.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenHandler.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Vertex.cpp" />
   </ItemGroup>

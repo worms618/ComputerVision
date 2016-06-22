@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include "MoleculeInfoPanel.h"
+#include "Skybox.h"
 
 class LaboratoryScreen : public Screen
 {
@@ -29,5 +30,7 @@ private:
 	MoleculeInstance* currentMolecule;
 	Model* atomModel;
 	MoleculeInfoPanel mip;
+
+	Skybox* skybox;
 };
 
