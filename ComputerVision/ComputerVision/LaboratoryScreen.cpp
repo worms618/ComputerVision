@@ -24,7 +24,7 @@ LaboratoryScreen::~LaboratoryScreen()
 void LaboratoryScreen::init()
 {
 	index = 0;
-	totalAtomicMass = "";
+	
 	Screen::init();
 	
 	lab = new laboratory();
@@ -36,7 +36,7 @@ void LaboratoryScreen::init()
 		MoleculeInstance* m = new MoleculeInstance(molecule);
 		molecule_instances.push_back(m);
 	}
-	currentMolecule = molecule_instances[0];
+	currentMolecule = molecule_instances[index];
 	updateMoleculeData();
 	
 }
@@ -49,31 +49,7 @@ void LaboratoryScreen::draw(int width, int height)
 	
 	drawMolecule(currentMolecule);
 	
-	glDisable(GL_LIGHTING);
-	glDisable(GL_LIGHT0);
-	glDisable(GL_COLOR_MATERIAL);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, width, height,0, -10, 10);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glColor4f(57 / 255.0f, 1.0f, 20 / 155.0f, 1.0f);
-	drawString(currentMolecule->molecule->name, 0, height / 10 * 8);	
-	drawString(moleculeFormula, 0, height / 10 * 8 + 18);
-	drawString(totalAtomicMass, 0, height / 10 * 8 + 36);
-
-	glBegin(GL_QUADS);
-	glColor4f(0, 0, 0, 1.0);
-	glVertex2f(0, height / 10 * 8);
-	glVertex2f(0, height);
-	glVertex2f(width / 10 * 1.5, height);
-	glVertex2f(width / 10 * 1.5, height / 10 * 8);
-	glEnd();
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_COLOR_MATERIAL);
+	mip.draw(width,height);
 	
 }
 
@@ -188,14 +164,6 @@ void LaboratoryScreen::drawAtomBinding(AtomBindingInstance* ab)
 	
 }
 
-void LaboratoryScreen::drawString(std::string str, int x, int y)
-{
-	glRasterPos2f(x, y + 18);
-	for (int i = 0; i < str.size(); i++)
-	{
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str[i]);
-	}
-}
 
 void LaboratoryScreen::updateMoleculeData()
 {
@@ -210,17 +178,19 @@ void LaboratoryScreen::updateMoleculeData()
 	}
 	std::string atoms = oss.str();
 	std::transform(atoms.begin(), atoms.end(), atoms.begin(), toupper);
-	moleculeFormula = atoms;
+	//moleculeFormula = atoms;
 
 	float tam = 0;
 	for (auto &atom : currentMolecule->molecule->atoms)
 		tam+=lab->periodicTable->getAtom(atom)->atomicMass;
 
-	oss.str("");
+	/*oss.str("");
 	oss.clear();
 	oss.flush();
 
 	oss.precision(4);
 	oss << tam;
-	totalAtomicMass = oss.str();
+	totalAtomicMass = oss.str();*/
+
+	mip.updateInfoPanel(currentMolecule->molecule->name, atoms, tam);
 }

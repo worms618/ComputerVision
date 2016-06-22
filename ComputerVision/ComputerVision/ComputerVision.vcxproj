@@ -150,8 +150,10 @@
     <ClInclude Include="json.h" />
     <ClInclude Include="laboratory.h" />
     <ClInclude Include="LaboratoryScreen.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Molecule.h" />
+    <ClInclude Include="MoleculeInfoPanel.h" />
     <ClInclude Include="PeriodicTable.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenHandler.h" />
@@ -165,8 +167,10 @@
     <ClCompile Include="laboratory.cpp" />
     <ClCompile Include="LaboratoryScreen.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Molecule.cpp" />
+    <ClCompile Include="MoleculeInfoPanel.cpp" />
     <ClCompile Include="PeriodicTable.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenHandler.cpp" />
